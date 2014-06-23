@@ -15,7 +15,6 @@ var cwIcons = {
 };
 exports.cloudwatch = function (msg) {
   if (msg.OldStateValue == 'INSUFFICIENT_DATA' && msg.NewStateValue == 'OK') {
-    console.info('Dropping insufficient => ok cloudwatch change');
     return null; // drop state changes that aren't useful/notable
   }
 

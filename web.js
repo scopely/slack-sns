@@ -67,6 +67,11 @@ function message (body, res, channel) {
     };
   }
 
+  if (!opts) {
+    console.info('Dropping message on behalf of handler');
+    return;
+  }
+
   if (!opts.name) {
     opts.name = body.Subject || 'Amazon SNS bridge';
   }
