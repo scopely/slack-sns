@@ -14,6 +14,11 @@ var cwIcons = {
   ALARM:             ':wave:',
 };
 exports.cloudwatch = function (msg) {
+  if (msg.OldStateValue == 'INSUFFICIENT_DATA' && msg.NewStateValue == 'OK') {
+    console.info('Dropping insufficient => ok cloudwatch change');
+    return null; // drop state changes that aren't useful/notable
+  }
+
   return {
     icon: cwIcons[msg.NewStateValue],
     text: 'Description: ' + msg.AlarmDescription + '\r\n>' + msg.NewStateReason,
