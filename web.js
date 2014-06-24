@@ -69,6 +69,7 @@ function message (body, res, channel) {
 
   if (!opts) {
     console.info('Dropping message on behalf of handler');
+    res.send('skipped');
     return;
   }
 
