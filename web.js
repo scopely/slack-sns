@@ -51,7 +51,11 @@ function subscribe (body, res, channel) {
 function message (body, res, channel) {
   console.log('Got', body.Type, 'via', body.TopicArn, 'timestamped', body.Timestamp,
               'with', body.Message.length, 'bytes');
-  var msg = JSON.parse(body.Message);
+
+  var msg = body.Message;
+  try {
+    var msg = JSON.parse(body.Message);
+  } catch (ex) {}
 
   var opts;
   if (msg.incident) {
