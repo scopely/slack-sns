@@ -52,7 +52,7 @@ function message (body, res, channel) {
   console.log('Got', body.Type, 'via', body.TopicArn, 'timestamped', body.Timestamp,
               'with', body.Message.length, 'bytes');
 
-  var msg = body.Message;
+  var msg = {text: body.Message};
   try {
     var msg = JSON.parse(body.Message);
   } catch (ex) {}
@@ -64,6 +64,8 @@ function message (body, res, channel) {
     opts = handlers.cloudwatch(msg);
   } else if (msg.AutoScalingGroupName) {
     opts = handlers.autoscaling(msg);
+  } else if (msg.text) {
+    opts = handlers.plaintext(msg);
   } else {
     opts = {
       icon: ':interrobang:',

@@ -47,3 +47,21 @@ exports.autoscaling = function (msg) {
     text: text,
   };
 };
+
+exports.plaintext = function (msg) {
+  var text = msg.text;
+  var icon;
+
+  if (text.match(/(Writes|Reads): UP from/)) {
+    icon = ':point_up_2:';
+  } else if (text.match(/(Writes|Reads): DOWN from/)) {
+    icon = ':point_down:';
+  } else if (text.match(/Consumed (Write|Read) Capacity (\d+)% was greater than/)) {
+    icon = ':information_desk_person:';
+  }
+
+  return {
+    icon: icon || ':interrobang:',
+    text: text,
+  };
+}
