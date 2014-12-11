@@ -2,10 +2,10 @@ var https = require('https');
 
 exports.send = function (opts) {
   var options = {
-    host: process.env.SLACK_TEAM + '.slack.com',
+    host: 'hooks.slack.com',
     port: 443,
     method: 'POST',
-    path: '/services/hooks/incoming-webhook?token=' + encodeURIComponent(process.env.SLACK_TOKEN),
+    path: '/services/' + process.env.SLACK_TOKEN,
     headers: {'Content-type': 'application/json'},
   };
 
