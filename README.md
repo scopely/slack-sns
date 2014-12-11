@@ -13,7 +13,7 @@ running `heroku apps:create <NAME>`, and pushing.
 To authorize your application with Slack, go to the
 [new integration](https://slack.com/services/new) page and create an Incoming
 Webhook. You'll get a url in the format of 
-`https://https://hooks.slack.com/services/TOKEN`. Take note of this token 
+`https://hooks.slack.com/services/TOKEN`. Take note of this token 
 and give the Heroku app your Slack information:
 
 ```
