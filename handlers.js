@@ -43,7 +43,7 @@ exports.autoscaling = function (msg) {
   }
 
   return {
-    icon: asIcons[msg.Event.split(':')[1]],
+    icon: msg.Event ? asIcons[msg.Event.split(':')[1]] : ':question:',
     text: text,
   };
 };
