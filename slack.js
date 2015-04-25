@@ -15,7 +15,10 @@ exports.send = function (opts) {
     }).setEncoding('utf8');
   });
 
-  req.write(JSON.stringify(clean(opts)));
+  if(!opts.rich) {
+    opts = clean(opts);
+  }
+  req.write(JSON.stringify(opts));
   req.end();
 };
 

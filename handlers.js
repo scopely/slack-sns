@@ -64,4 +64,25 @@ exports.plaintext = function (msg) {
     icon: icon || ':interrobang:',
     text: text,
   };
-}
+};
+
+var alarmColors = {
+  ALARM:             '#e74c3c',
+  OK:                '#27ae60',
+  INSUFFICIENT_DATA: '#f39c12'
+};
+exports.alarm = function (msg) {
+  return {
+    icon_url: msg.appIcon,
+    rich: true,
+    username: msg.appName,
+    attachments: [{
+      fallback: msg.title,
+      color: alarmColors[msg.type],
+      title: msg.title,
+      title_link: msg.metricUrl,
+      text: msg.message,
+      image_url: msg.graphUrl
+    }]
+  };
+};
