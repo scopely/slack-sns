@@ -1,20 +1,24 @@
 var handlers = require('./default');
-exports.stackdriver = function (msg) {
+var mail = require('./mail');
+exports.handle = function handle(msg) {
   if (msg.incident) {
-    opts = handlers.stackdriver(msg);
+    return handlers.stackdriver(msg);
   } else if (msg.AlarmName) {
-    opts = handlers.cloudwatch(msg);
+    return handlers.cloudwatch(msg);
   } else if (msg.AutoScalingGroupName) {
-    opts = handlers.autoscaling(msg);
+    return handlers.autoscaling(msg);
+  } else if (msg.mail) {
+    return mail.mail(msg);
   } else if (msg.type) {
-    opts = handlers.alarm(msg);
+    var opts = handlers.alarm(msg);
     opts.channel = channel;
+    return opts;
   } else if (msg.text) {
-    opts = handlers.plaintext(msg);
+    return handlers.plaintext(msg);
   } else {
-    opts = {
+    return {
       icon: ':interrobang:',
-      text: 'Unrecognized SNS message ```' + body.Message + '```',
+      text: 'Unrecognized SNS message ```' + msg + '```',
     };
   }
 }
