@@ -54,27 +54,10 @@ function message (body, res, channel) {
 
   var msg = {text: body.Message};
   try {
-    var msg = JSON.parse(body.Message);
+    msg = JSON.parse(body.Message);
   } catch (ex) {}
 
-  var opts;
-  if (msg.incident) {
-    opts = handlers.stackdriver(msg);
-  } else if (msg.AlarmName) {
-    opts = handlers.cloudwatch(msg);
-  } else if (msg.AutoScalingGroupName) {
-    opts = handlers.autoscaling(msg);
-  } else if (msg.type) {
-    opts = handlers.alarm(msg);
-    opts.channel = channel;
-  } else if (msg.text) {
-    opts = handlers.plaintext(msg);
-  } else {
-    opts = {
-      icon: ':interrobang:',
-      text: 'Unrecognized SNS message ```' + body.Message + '```',
-    };
-  }
+  var opts = handlers.handle(msg);
 
   if (!opts) {
     console.info('Dropping message on behalf of handler');
